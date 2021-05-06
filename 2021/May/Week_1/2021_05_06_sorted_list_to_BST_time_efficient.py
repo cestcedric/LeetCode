@@ -14,38 +14,10 @@ class TreeNode:
 
 
 class Solution:
-    # Memory-efficient: list is directly transformed to tree, O(n) space
-    # Finding middle of list is no efficient, so O(n log(n)) runtime
-    def sortedListToBST_memory(self, head):
-        if not head:
-            return None
-        p_slow, p_fast, p_prev = head, head, None
-
-        # find middle with p_slow, p_prev end of left part, p_fast end of tree
-        while p_fast.next:
-            p_prev = p_slow
-            p_slow = p_slow.next
-            p_fast = p_fast.next
-            if p_fast.next:
-                p_fast = p_fast.next
-        
-        if p_prev == None:
-            return TreeNode(p_slow.val)
-
-        # split tree
-        # left part: start -> p_prev
-        # right part: p_slow.next -> end
-        p_prev.next = None
-        root = TreeNode(p_slow.val)
-        root.left = self.sortedListToBST(head)
-        root.right = self.sortedListToBST(p_slow.next)
-        return root
-
-
     # Faster execution time, but uses more memory
     # Additional python list created to use index and slicing
     # O(n) time complexity
-    def sortedListToBST_time(self, head):
+    def sortedListToBST(self, head: ListNode) -> TreeNode:
         tmp = []
         while head:
             tmp.append(head)
@@ -64,12 +36,6 @@ class Solution:
 
         return req(tmp)
 
-
-    # call whichever method you prefer
-    def sortedListToBST(self, head: ListNode) -> TreeNode:
-        return self.sortedListToBST_time(head)
-
-        
 
 def printTree(tree):
     if not tree:
