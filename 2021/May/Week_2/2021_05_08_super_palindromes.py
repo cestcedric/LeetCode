@@ -2,10 +2,10 @@ from   itertools import count
 import math
 
 class Solution:
-    def getPalindrome(self, minDigits, maxDigits):
+    def getPalindrome(self, minDigits):
         # https://stackoverflow.com/a/19857182
         yield 0
-        for digits in range(minDigits, maxDigits):
+        for digits in count(minDigits):
             first = 10 ** ((digits - 1) // 2)
             for s in map(str, range(first, 10 * first)):
                 yield int(s + s[-(digits % 2)-1::-1])
@@ -18,7 +18,7 @@ class Solution:
         left_sqrt = math.ceil(math.sqrt(left_i))
         right_sqrt = math.floor(math.sqrt(right_i))
 
-        gen = self.getPalindrome(len(str(left_sqrt)), len(str(right_sqrt)) + 1)
+        gen = self.getPalindrome(len(str(left_sqrt)))
         
         palindromes = 0
         for p in gen:
