@@ -1,19 +1,22 @@
+import heapq
+
 class Solution:
     def isPossible(self, target: list) -> bool:
-        length = len(target)
-        while True:
-            print(target)
-            _max = max(target)
-            _max_index = target.index(_max)
-            prev = target[_max_index]
-            target[_max_index] -= (sum(target[:_max_index]) + sum(target[_max_index+1:]))
-            if prev == target[_max_index]:
+        # idea biggest element generated in last sum => go backwards until we have 1 everywhere
+        # or not, then it doesn't work
+        total = sum(target)
+        # heap returns smallest element, so turn everything around
+        heap = [-t for t in target]
+        heapq.heapify(heap)
+        while heap[0] != -1:
+            _max = -heapq.heappop(heap)
+            total -= _max
+            if total < 1 or _max <= total:
                 return False
-            checksum = sum(target)
-            if checksum == length:
-                return True
-            if checksum < length:
-                return False
+            _max %= total
+            total += _max
+            heapq.heappush(heap, -_max)
+        return True
 
 
 testcases = [
