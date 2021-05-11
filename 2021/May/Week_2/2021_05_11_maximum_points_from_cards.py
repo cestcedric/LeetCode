@@ -1,13 +1,16 @@
 class Solution:
     def maxScore(self, cardPoints: list, k: int) -> int:
-        maxSum = 0
         total = sum(cardPoints)
         length = len(cardPoints)
-        cut = length - k
+        
         if length == k: return total
-        for i in range(length - cut + 1):
-            excluded = cardPoints[i:i+cut]
-            maxSum = max(maxSum, total - sum(excluded))
+
+        cut = length - k
+        excluded = sum(cardPoints[:cut])
+        maxSum = total - excluded
+        for i in range(0, length - cut):
+            excluded = excluded - cardPoints[i] + cardPoints[i+cut]
+            maxSum = max(maxSum, total - excluded)
         return maxSum
 
 
