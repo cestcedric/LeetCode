@@ -1,7 +1,10 @@
 class Solution:
     # pre-check if only valid chars included
     # float(s) would correctly parse 'inf' which is not valid here
-    validChars = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.', 'e', 'E', '-', '+']
+    validChars = [
+        '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 
+        '.', 'e', 'E', '-', '+'
+    ]
 
     def isNumber(self, s: str) -> bool:
         for c in s:
@@ -12,8 +15,6 @@ class Solution:
             return True
         except:
             return False
-        
-
 
 
 testcases = [
