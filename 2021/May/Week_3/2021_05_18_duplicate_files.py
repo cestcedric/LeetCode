@@ -1,4 +1,5 @@
 class Solution:
+    # Time and space complexity of O(n*k), for n paths of average length k
     def findDuplicate(self, paths: list) -> list:
         dict = {}
         duplicates = {}
