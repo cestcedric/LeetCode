@@ -2,6 +2,7 @@ class Solution:
     def minPartitions(self, n: str) -> int:
         return int(max(n))
 
+
 testcases = [
     ('32', 3),
     ('82734', 8),
