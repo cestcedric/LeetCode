@@ -1,5 +1,9 @@
 class Solution:
     def maxArea(self, h: int, w: int, horizontalCuts: list, verticalCuts: list) -> int:
+        # O(n log(n)) time complexity: 
+        # sorting arrays takes O(n log(n))
+        # Passing through them for max diff linearly obviously O(n)
+        # O(n) space complexity for additional cut diff arrays
         horizontalCuts.sort()
         verticalCuts.sort()
         
