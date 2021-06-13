@@ -1,6 +1,7 @@
 class Solution:
     # O(n*l) time complexity: n words of average length l (dict lookup in O(1))
     # O(n) space complexity: additional dict containing all words
+    class Solution:
     def palindromePairs(self, words: list) -> list:
         positions = { x: i for i, x in enumerate(words) }
         output = []
@@ -9,17 +10,16 @@ class Solution:
             length = len(w)
             for l in range(length+1):
                 pre, suf = w[:l], w[l:]
+                key_pre, key_suf = suf[::-1], pre[::-1]
 
                 # prefix is palindrome
-                if pre == pre[::-1]:
-                    k = w[l:][::-1]
-                    if k in positions and positions[k] != i: output.append([positions[k], i])
+                if pre == pre[::-1] and key_pre in positions and positions[key_pre] != i: 
+                    output.append([positions[key_pre], i])
                 
                 # suffix is palindrome
                 if l == length: continue
-                if suf == suf[::-1]:
-                    k = w[:l][::-1]
-                    if k in positions and positions[k] != i: output.append([i, positions[k]])
+                if suf == suf[::-1] and key_suf in positions and positions[key_suf] != i: 
+                    output.append([i, positions[key_suf]])
         
         return output
 
