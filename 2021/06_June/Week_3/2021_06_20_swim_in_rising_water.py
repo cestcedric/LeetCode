@@ -1,3 +1,5 @@
+import heapq
+
 class Solution:
     # O(n^2 * log(n)) time complexity: each node has on avg. 2 lower and 2 higher neighbors
     # O(n^2) space complexity
@@ -29,6 +31,27 @@ class Solution:
         return paths[n-1][n-1]
 
 
+    # O(n^2 * log(n)) time complexity: look at all elements once, heap insertion in O(log(n))
+    # O(n^2) space complexity
+    def swimInWaterHeap(self, grid: list) -> int:
+        n = len(grid)
+        maxDepth = n * (n-1)
+        if grid[n-1][n-1] == maxDepth: return maxDepth
+
+        visited = set()
+        heap = []
+        heapq.heappush(heap, (grid[0][0], 0, 0))
+
+        while heap:
+            curDepth, x, y = heapq.heappop(heap)
+            if x == y == n-1: return curDepth
+            visited.add((x,y))
+            for i, j in [(x-1,y), (x+1,y), (x,y-1), (x,y+1)]:
+                if min(i,j) < 0 or max(i,j) == n or (i,j) in visited: continue
+                heapq.heappush(heap, (max(grid[i][j], curDepth), i, j))
+                visited.add((i,j))
+
+
 testcases = [
     ([[0,2],[1,3]], 3),
     ([[0,1,2,3,4],[24,23,22,21,5],[12,13,14,15,16],[11,17,18,19,20],[10,9,8,7,6]], 16)
@@ -36,7 +59,7 @@ testcases = [
 
 
 for i, (input, target) in enumerate(testcases):
-    output = Solution().swimInWater(input)
+    output = Solution().swimInWaterHeap(input)
     print('Case #{}: should be {}, is {}'.format(i+1, target, output))
     assert target == output
 print('All test cases passed!')
