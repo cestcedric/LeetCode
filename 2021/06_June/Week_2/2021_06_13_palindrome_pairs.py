@@ -1,7 +1,6 @@
 class Solution:
     # O(n*l) time complexity: n words of average length l (dict lookup in O(1))
     # O(n) space complexity: additional dict containing all words
-    class Solution:
     def palindromePairs(self, words: list) -> list:
         positions = { x: i for i, x in enumerate(words) }
         output = []
