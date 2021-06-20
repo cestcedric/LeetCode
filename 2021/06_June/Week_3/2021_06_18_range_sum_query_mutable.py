@@ -1,5 +1,7 @@
 import numpy as np
 
+# Compute cumulative sum when updating array
+# Works when not doing everything by hand, but using built-in functions
 class NumArray:
 
     # O(n) time complexity if done with pure Python, numpy speeds cumulative sum up a lot
@@ -21,7 +23,6 @@ class NumArray:
     # O(1) space complexity
     def sumRange(self, left: int, right: int) -> int:
         return self.cSum[right] - (self.cSum[left-1] if left > 0 else 0)
-        
 
 
 # Your NumArray object will be instantiated and called as such:
