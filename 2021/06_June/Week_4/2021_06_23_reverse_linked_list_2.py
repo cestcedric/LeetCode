@@ -11,15 +11,10 @@ class Solution:
     def reverseBetween2Pass(self, head: ListNode, left: int, right: int) -> ListNode:
         # generic reverse
         def reverse(head):
-            curr = head
-            next = curr.next
-            curr.next = None
-            while next is not None:
-                prev = curr
-                curr = next
-                next = next.next
-                curr.next = prev
-            return curr, head
+            prev, curr = None, head
+            while curr is not None:
+                curr.next, curr, prev = prev, curr.next, curr
+            return prev, head
 
         firstNode, lastNode = head, head
         left_i, right_i = left, right
@@ -93,7 +88,7 @@ for i, (input, left, right, target) in enumerate(testcases):
         node.next = next
         node = next
     output = []
-    reversedList = Solution().reverseBetween(head, left, right)
+    reversedList = Solution().reverseBetween2Pass(head, left, right)
     while reversedList is not None:
         output.append(reversedList.val)
         reversedList = reversedList.next
