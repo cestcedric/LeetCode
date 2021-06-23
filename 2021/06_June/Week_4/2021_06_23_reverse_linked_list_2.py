@@ -52,7 +52,31 @@ class Solution:
         return head
 
 
+    # O(n) time complexity: one pass through list
+    # O(1) space complexity: no extra nodes created
+    def reverseBetween(self, head: ListNode, left: int, right: int) -> ListNode:
+        if left == right: return head
+        prev, curr = None, head
 
+        # find start of part to reverse
+        while left > 1:
+            prev, curr = curr, curr.next
+            left -= 1
+            right -= 1
+
+        # reverse
+        beforeRev, firstRev = prev, curr
+        while right > 0:
+            curr.next, curr, prev = prev, curr.next, curr
+            right -= 1
+
+        # stitch back together
+        if beforeRev is not None: beforeRev.next = prev
+        else: head = prev
+        firstRev.next = curr
+
+        
+        return head
 
 
 testcases = [
