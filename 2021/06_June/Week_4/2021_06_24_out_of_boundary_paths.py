@@ -1,3 +1,5 @@
+from functools import lru_cache
+
 class Solution:
     # O(m*n*maxMove) time complexity: compute every cell in constant time
     # O(m*n*maxMove) space complexity: obviously, we have the dp structure
@@ -20,7 +22,24 @@ class Solution:
         return dp[maxMove][startRow][startColumn] % MOD
 
 
+    # O(m*n*maxMove) time complexity: same computations as above
+    # O(m*n*maxMove) space complexity: using cache instead of explicit structure
+    def findPathsCache(self, m: int, n: int, maxMove: int, startRow: int, startColumn: int) -> int:
+        MOD = 10**9 + 7
 
+        @lru_cache(None)
+        def dfs(x, y, z):
+            nonlocal m, n
+            if x in [-1, m] or y in [-1, n]: return 1
+            if z == 0: return 0
+            total = 0
+            total += dfs(x - 1, y, z - 1)
+            total += dfs(x + 1, y, z - 1)
+            total += dfs(x, y - 1, z - 1)
+            total += dfs(x, y + 1, z - 1)
+            return total
+
+        return dfs(startRow, startColumn, maxMove) % MOD
 
 
 testcases = [
@@ -30,7 +49,7 @@ testcases = [
 ]
 
 for i, (m, n, maxMove, startRow, startColumn, target) in enumerate(testcases):
-    output = Solution().findPaths(m, n, maxMove, startRow, startColumn)
+    output = Solution().findPathsCache(m, n, maxMove, startRow, startColumn)
     print('Case #{}: should be {}, is {}'.format(i+1, target, output))
     assert target == output
 print('All test cases passed!')
