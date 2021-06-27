@@ -1,7 +1,6 @@
 from collections import deque
 
 class Solution:
-    
     # O(n^2) time complexity: n edges, O(n) DFS for each edge
     # O(n) space complexity: build graph with at most n entries, DFS with O(n) space complexity 
     def findRedundantConnection(self, edges: list) -> list:
@@ -35,8 +34,6 @@ class Solution:
             else: graph[x] = [y]
             if y in graph: graph[y].append(x)
             else: graph[y] = [x]
-
-
 
 
 testcases = [
