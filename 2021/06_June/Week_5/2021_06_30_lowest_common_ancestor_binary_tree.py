@@ -29,3 +29,15 @@ class Solution:
             if locationP != locationQ: return node
             node = locationP
 
+    # O(n) time complexity: no caching needed, one pass through at most n nodes
+    # O(log(n)) space complexity: call stack depth
+    def lowestCommonAncestor2(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        if root == p or root == q: return root
+        if root is None: return None
+
+        left = self.lowestCommonAncestor2(root.left, p, q)
+        right = self.lowestCommonAncestor2(root.right, p, q)
+
+        if left and right: return root
+        return left or right
+
