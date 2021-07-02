@@ -12,6 +12,18 @@ class Solution:
 
         return [int(b, 2) for b in rec(n)]
 
+    
+    def grayCodeIT(self, n: int) -> list:
+        tmp = ['0', '1']
+
+        for _ in range(1, n):
+            left = ['0' + b for b in tmp]
+            right = ['1' + b for b in tmp[::-1]]
+            tmp = left + right
+
+        return [int(b, 2) for b in tmp]
+        
+
 
 testcases = [
     (2, [[0,1,3,2], [0,2,3,1]]),
