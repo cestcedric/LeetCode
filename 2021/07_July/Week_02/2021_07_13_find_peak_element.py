@@ -10,6 +10,7 @@ class Solution:
 
         while left < right - 2:
             mid = (left + right) // 2
+            if nums[mid - 1] < nums[mid] > nums[mid + 1]: return mid
             if nums[mid] < nums[mid + 1]: left = mid
             else: right = mid + 1
 
