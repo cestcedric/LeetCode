@@ -3,7 +3,7 @@ from functools import cmp_to_key
 
 class Solution:
     # O(n * log(n)) time complexity: it's sorting after all
-    # O(n) space complexity: temporarilly allocate memory for list
+    # O(n) space complexity: temporarily allocate memory for list
     def customSortStringComparator(self, order: str, str: str) -> str:
         orderDict = {c: i for i, c in enumerate(order)}
         
@@ -14,6 +14,21 @@ class Solution:
             return orderA - orderB
 
         return ''.join(sorted(list(str), key = cmp_to_key(comparator)))
+
+    # O(n) time complexity: str of length n, order obviously maximum length of 26
+    # O(n) space complexity: counter dictionary
+    def customSortString(self, order: str, str: str) -> str:
+        counter = Counter(str)
+        output = []
+        
+        for c in order:
+            if c in counter:
+                output.append(c * counter[c])
+                counter.pop(c)
+        for c in counter:
+            output.append(c * counter[c])
+
+        return ''.join(output)
 
 
 testcases = [
