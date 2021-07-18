@@ -32,22 +32,20 @@ class Solution:
         return sentinel.next
 
     # O(n) time complexity: looks at every node twice
-    # O(n) space complexity: queue stores all nodes at one point
+    # O(1) space complexity
     def reverseList(self, node):
         if node is None: return None, None
-        queue = []
-        while node is not None:
-            queue.append(node)
-            node = node.next
-            
-        head = queue.pop()
-        node = head
-        while queue != []:
-            node.next = queue.pop()
-            node = node.next
-        node.next = None
+        
+        last = node
+        prev, succ = None, node.next
+        while succ is not None:
+            node.next = prev
+            prev = node
+            node = succ
+            succ = succ.next
+        node.next = prev
 
-        return head, node
+        return node, last
 
 
 def linkedListToArray(node):
