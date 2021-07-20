@@ -10,6 +10,7 @@ class MedianFinderSorted:
         
     # O(log(n)) time complexity per insertion 
     # => O(n * log(n)) time complexity for all elements
+    # Only because we use SortedList, binary search + insertion is actually O(log(n) + n)
     def addNum(self, num: int) -> None:
         self.data.add(num)
         self.size += 1
