@@ -6,12 +6,12 @@ class Node:
             self.key = key
             self.total = val
             self.val = val
-            self.children = []
+            self.children = {}
         else:
             self.key = key[0]
             self.total = val
             self.val = 0
-            self.children = [Node(key[1:], val)]
+            self.children = {key[1]: Node(key[1:], val)}
     
 
     # O(k) time complexity
@@ -24,32 +24,28 @@ class Node:
             self.val = val
         # found prefix
         elif self.key == key[0]:
-            diff = None
-            for c in self.children:
-                if c.key == key[1]:
-                    diff = c.insert(key[1:], val)
-            if diff is None:
+            if key[1] in self.children:
+                diff = self.children[key[1]].insert(key[1:], val)
+            else:
                 diff = val
-                self.children.append(Node(key[1:], val))
+                self.children[key[1]] = Node(key[1:], val)
             self.total += diff
         # sentinel node
         else:
-            diff = None
-            for c in self.children:
-                if c.key == key[0]:
-                    diff = c.insert(key, val)
-            if diff is None:
+            if key[0] in self.children:
+                diff = self.children[key[0]].insert(key, val)
+            else:
                 diff = val
-                self.children.append(Node(key, val))
+                self.children[key[0]] = Node(key, val)
             self.total += diff
         return diff
 
     
     def printTrie(self):
-        print('key: {}\nval: {}\ntotal: {}\nchildren: {}'.format(self.key, self.val, self.total, [c.key for c in self.children]))
+        print('key: {}\nval: {}\ntotal: {}\nchildren: {}'.format(self.key, self.val, self.total, [self.children[c].key for c in self.children]))
         print('---')
         for c in self.children:
-            c.printTrie()
+            self.children[c].printTrie()
 
 
 class MapSum:
@@ -67,13 +63,14 @@ class MapSum:
     # O(1) space: duh
     def sum(self, prefix: str) -> int:
         def traverse(node, prefix):
-            if node.key == prefix: return node.total
-            if node.key is not None and node.key != prefix[0]: return 0
-            for c in node.children:
-                if prefix[1] == c.key: return traverse(c, prefix[1:])
+            if prefix == '' or prefix == node.key: return node.total
+            if prefix[0] == node.key:
+                prefix = prefix[1:]
+            if prefix[0] in node.children: 
+                return traverse(node.children[prefix[0]], prefix)
             return 0
             
-        return max(traverse(node, prefix) for node in self.trie.children)
+        return traverse(self.trie, prefix)
 
 
 class MapSumDict:
@@ -100,7 +97,7 @@ class MapSumDict:
 
 
 # Your MapSum object will be instantiated and called as such:
-mapSum = MapSumDict()
+mapSum = MapSum()
 mapSum.insert("apple", 3)
 print(mapSum.sum("ap"))         # return 3 (apple = 3)
 mapSum.insert("app", 2)
