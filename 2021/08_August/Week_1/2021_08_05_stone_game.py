@@ -14,19 +14,25 @@ class Solution:
         def dp(i, j):
             nonlocal piles
 
-            if i == j: 
-                return -piles[i]
-
-            if (i + j) % 2 == 0: 
-                return max(dp(i + 1, j) - piles[i], dp(i, j - 1) - piles[j])
-            else:
-                return max(dp(i + 1, j) + piles[i], dp(i, j - 1), + piles[j])
+            if i == j: return piles[i]
+            return max(piles[i] - dp(i + 1, j), piles[j] - dp(i, j - 1))
 
         return dp(0, len(piles) - 1) > 0
 
 
+    # O(n^2) time and space
+    # can reduce space to O(n) by overwriting dp[i]
+    def stoneGameDPlinear(self, piles: list) -> bool:
+        n = len(piles)
+        dp = [[0] * n for _ in range(n)]
 
+        for i in range(n): dp[i][i] = piles[i]
 
+        for i in range(n - 2, -1, -1):
+            for j in range(n - i):
+                dp[i][j] = max(piles[i] - dp[i + 1][j], piles[j] - dp[i][j - 1])
+
+        return dp[0][-1] > 0
 
 
 testcases = [
@@ -36,7 +42,7 @@ testcases = [
 ]
 
 for i, (piles, target) in enumerate(testcases):
-    output = Solution().stoneGame(piles)
+    output = Solution().stoneGameDPlinear(piles)
     print('Case #{}: should be {}, is {}'.format(i + 1, target, output))
     assert target == output
 print('All test cases passed!')
