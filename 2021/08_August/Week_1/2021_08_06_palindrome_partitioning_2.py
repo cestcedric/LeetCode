@@ -3,7 +3,8 @@ from functools import lru_cache
 
 
 class Solution:
-    # O(n^2) time and space: O(n^2) possible palindromes, caching for quick traversal
+    # O(n^2) time and space: 
+    # O(n^2) to find possible palindromes, caching for quick traversal
     def minCut(self, s):
         d, n = defaultdict(set), len(s)
         
