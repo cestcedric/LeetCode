@@ -30,3 +30,21 @@ class Solution:
 
         return count
 
+
+    # O(n) time: look at each node once
+    # O(h) space: h = height of tree, so still O(n)
+    def goodNodesRec(self, root: TreeNode) -> int:
+        if root is None: return 0
+
+        def dfs(node: TreeNode, maxVal: int) -> int:
+            if node is None: return 0
+            
+            count = 0
+            if node.val >= maxVal: count += 1
+            count += dfs(node.left, max(maxVal, node.val))
+            count += dfs(node.right, max(maxVal, node.val))
+
+            return count
+
+        return dfs(root, root.val)
+
