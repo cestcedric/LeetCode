@@ -10,26 +10,17 @@ class Solution:
             if x < y: return -1
             return 1
 
-        dpFromLeft = [1] * n
-        dpFromRight = [1] * n
+        dp = [1] * n
 
         sign = None
         for i in range(1, n):
             s = diffSign(arr[i - 1], arr[i])
             if s == 0: continue
-            if s == sign: dpFromLeft[i] = 2
-            else: dpFromLeft[i] = dpFromLeft[i - 1] + 1
+            if s == sign: dp[i] = 2
+            else: dp[i] = dp[i - 1] + 1
             sign = s
 
-        sign = None
-        for i in range(n - 2, -1, -1):
-            s = diffSign(arr[i + 1], arr[i])
-            if s == 0: continue
-            if s == sign: dpFromRight[i] = 2
-            else: dpFromRight[i] = dpFromRight[i + 1] + 1
-            sign = s
-
-        return max(max(l, r) for l, r in zip(dpFromLeft, dpFromRight))
+        return max(dp)
 
 
 
