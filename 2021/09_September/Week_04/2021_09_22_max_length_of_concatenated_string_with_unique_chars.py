@@ -1,7 +1,6 @@
 class Solution:
-    # O(2^n) time: we always try every combination
-    # O(n) space: temporary candidate list at most contains all input strings
-    # obviously bruteforce solution, but works given the small input size
+    # O(1) time: always finished after looking at 26 letters
+    # O(1) space: array with 26 entries
     def uniqueChars(self, stringList: list) -> list:
         fp = [0] * 26
         for s in stringList:
@@ -12,7 +11,9 @@ class Solution:
 
         return True
 
-
+    # O(2^n) time: we always try every combination
+    # O(n) space: temporary candidate list at most contains all input strings
+    # obviously bruteforce solution, but works given the small input size
     def maxLength(self, arr: list) -> int:
         n = len(arr)
         if n == 1: return len(arr[0])
